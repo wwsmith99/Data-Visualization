@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Assignment 3 COMP 4304</title>
+</head>
+
+<body>
+
+    <p> <b>Submitted by:</b> William Smith</p>
+
+    <p>
+        These are the imbeded objects as requested by the assignment description.
+    </p>
+
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script>
+        function drawit(jsonString) {
+
+            let dataValues = JSON.parse(jsonString);
+            console.log(dataValues)
+
+            //drawing code goes here.       
+            let mySelection = d3.select("#drawingplace")
+                .data(dataValues)
+                .selectAll("rect")
+                .data(dataValues)
+                .attr("fill", "black")
+                .attr("width", 80)
+                .attr("height", function (d) {
+                    return d
+                })
+                .attr("y", function (d) {
+                    return 300 - d
+                })
+
+
+            mySelection.enter()
+                .append("rect")
+                .attr("height", function (d) {
+                    return d
+                })
+                .attr("width", 80)
+                .attr("x", function (item, index, srcArr) {
+                    return index * 80
+                })
+                .attr("y", function (d) {
+                    return 300 - d
+                })
+
+
+        }
+    </script>
+
+    <h1>Solution</h1>
+    <p>
+        enter your values here:
+    </p>
+
+    <textarea onchange=drawit(this.value)>[100,300,200]</textarea>
+
+
+    <h1>As bars...</h1>
+
+    <svg id="drawingplace" height="300" width="600">
+        <!--<rect x = "0", y = "200", width = "20", height = "20"> </rect>-->
+    </svg>
+
+
+
+    <h1>Attribution</h1>
+    <p>
+        This assignment was completed with the help of the course notes and videos and tutorials from <a
+            href="https://www.w3schools.com/html/default.asp">w3schools</a>
+    </p>
+</body>
+
+</body>
+
+</html>
