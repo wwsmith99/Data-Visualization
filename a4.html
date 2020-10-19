@@ -1,78 +1,92 @@
+
 <!DOCTYPE html>
 
 <html>
 
 <head>
-    <title>Assignment 3 COMP 4304</title>
+    <title>Assignment 4 COMP 4304</title>
+
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script>
+        
+    
+      d3.csv("NOAAdata.csv").then(function(data){  
+        data.forEach(function(d){
+
+            d.Year = +d.Year;
+            d.January = +d.January; // making sure these are number values and not strings.
+        })
+        console.log(data)
+        
+let xScale = d3.scaleLinear()
+        .domain([d3.min(data,d=>d[0]), d3.max(data,d=>[0])])
+        .range([0, 300])
+
+let yScale = d3.scaleLinear()
+        .domain([d3.min(data,d=>d[1]), d3.max(data,d=>[1])])
+        .range([600, 0])
+
+
+        let x = 4.2
+        let mySelection = d3.select("#drawingplace")
+
+
+                .selectAll("circle")
+                .data(data)
+                
+                .enter()
+                
+      
+                .append("circle")
+                .attr("r", 2)
+
+                .attr("cx", function(d,i){
+                    
+                    return 4.2 * i
+                }) 
+                
+                .attr("cy", function(d){
+                    return 280 - Math.abs(d.January)*100
+                }) 
+                    
+                
+                //.attr("cx","100")
+                //.attr("cy","100")
+                
+                .style("fill", "black")
+        })
+        
+        //do all the drawing stuff here 
+        
+                
+            
+    </script>
 </head>
 
 <body>
+<h1>Assingment 4 </h1>
 
     <p> <b>Submitted by:</b> William Smith</p>
 
     <p>
-        These are the imbeded objects as requested by the assignment description.
+        The scatter plot of the weather data as requested by the assignment description.
     </p>
 
-    <script src="https://d3js.org/d3.v6.min.js"></script>
-    <script>
-        function drawit(jsonString) {
 
-            let dataValues = JSON.parse(jsonString);
-            console.log(dataValues)
-
-            //drawing code goes here.       
-            let mySelection = d3.select("#drawingplace")
-                .data(dataValues)
-                .selectAll("rect")
-                .data(dataValues)
-                .attr("fill", "black")
-                .attr("width", 80)
-                .attr("height", function (d) {
-                    return d
-                })
-                .attr("y", function (d) {
-                    return 300 - d
-                })
-
-
-            mySelection.enter()
-                .append("rect")
-                .attr("height", function (d) {
-                    return d
-                })
-                .attr("width", 80)
-                .attr("x", function (item, index, srcArr) {
-                    return index * 80
-                })
-                .attr("y", function (d) {
-                    return 300 - d
-                })
-
-
-        }
-    </script>
+    
 
     <h1>Solution</h1>
-    <p>
-        enter your values here:
-    </p>
 
-    <textarea onchange=drawit(this.value)>[100,300,200]</textarea>
+    <svg id="drawingplace" height="300" width="600"></svg>
+    <text x = "0", y = "290", height = "10">Time(1880 - 2020) </text>
 
-
-    <h1>As bars...</h1>
-
-    <svg id="drawingplace" height="300" width="600">
-        <!--<rect x = "0", y = "200", width = "20", height = "20"> </rect>-->
-    </svg>
-
+    <text x = "0", y = "290", height = "10", transform="rotate(90 0,290)" >Temperature data for the month of January </text>
 
 
     <h1>Attribution</h1>
     <p>
-        This assignment was completed with the help of the course notes and videos and tutorials from <a
-            href="https://www.w3schools.com/html/default.asp">w3schools</a>
+        This assignment was completed with the help of the course notes, videos and tutorials from <a
+            href="https://www.w3schools.com/html/default.asp">w3schools</a>, and the tutorial at <a href = "http://learnjsdata.com/read_data.html">Learn JS Data</a>.
     </p>
 </body>
 
